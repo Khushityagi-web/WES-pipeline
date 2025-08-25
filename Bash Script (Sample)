@@ -1,0 +1,24 @@
+#!/bin/bash
+# Simple WES Pipeline Script
+
+# Step 1: Quality Check
+fastqc sample_R1.fastq.gz sample_R2.fastq.gz -o QC_Reports/
+
+# Step 2: Trimming
+fastp -i sample_R1.fastq.gz -I sample_R2.fastq.gz \
+      -o sample_R1.trimmed.fastq.gz -O sample_R2.trimmed.fastq.gz
+
+# Step 3: Alignment
+bwa mem -t 8 GRCh38.fa sample_R1.trimmed.fastq.gz sample_R2.trimmed.fastq.gz > sample.sam
+
+# Step 4: Convert SAM → BAM, Sort, Index
+samtools view -Sb sample.sam | samtools sort -o sample.sorted.bam
+samtools index sample.sorted.bam
+
+# Step 5: Variant Calling (future step)
+gatk HaplotypeCaller -R GRCh38.fa -I sample.sorted.bam -O sample.raw.vcf
+
+# Step 6: Annotation (future step)
+# annovar/vep to be integrated here
+
+echo "Pipeline completed for sample!"
