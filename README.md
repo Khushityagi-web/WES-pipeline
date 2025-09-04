@@ -53,5 +53,5 @@ Install the following tools before running the script:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/username/wes-pipeline.git
-   cd wes-pipeline
+   git clone https://github.com/Khushityagi-web/WES-pipeline.git
+   cd WES-pipeline
