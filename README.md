@@ -1,57 +1,74 @@
-# Simple Whole Exome Sequencing (WES) Pipeline
+# Simple Whole Exome Sequencing (WES) Practice Pipeline
 
-This repository contains a **simple bash script** to process Whole Exome Sequencing (WES) data, from raw FASTQ files to variant calling. It is designed for beginners and can be easily customized for production workflows.
+This repository contains a beginner-friendly Bash script that demonstrates the core steps involved in a typical Whole Exome Sequencing workflow—from raw FASTQ files to basic variant calling.
+It is designed for learning purposes and serves as a minimal template to understand the structure of a WES pipeline.
 
----
+Note: This script is intentionally simplified and does not represent a full GATK Best Practices pipeline.
+Production pipelines require additional steps such as duplicate marking, BQSR, coverage QC, contamination checks, and variant filtering.
 
-## 🧩 Overview
+## 🔁 Workflow Overview
+1. Quality Control — FastQC
 
-The pipeline performs the following steps:
+Generates QC reports for raw FASTQ files.
 
-1. **Quality Control (FastQC)**  
-   Generates QC reports for raw FASTQ files.  
+2. Read Trimming — fastp
 
-2. **Read Trimming (fastp)**  
-   Removes adapters and low-quality bases.  
+Removes adapters and low-quality sequence regions.
 
-3. **Alignment (BWA-MEM)**  
-   Aligns reads to the human reference genome (GRCh38).  
+3. Alignment — BWA-MEM
 
-4. **SAM to BAM Conversion, Sorting, and Indexing (SAMtools)**  
-   Converts the SAM file to BAM, sorts, and indexes it.  
+Aligns reads to the reference genome (GRCh38).
 
-5. **Variant Calling (GATK HaplotypeCaller)**  
-   Generates a raw VCF file with variants.  
+4. SAM → BAM Processing — SAMtools
 
-6. **Annotation (Future)**  
-   Placeholder for integrating annotation tools such as ANNOVAR or VEP.  
+Convert SAM to BAM
 
----
+Sort
 
-## 🛠️ Requirements
+Index
 
-Install the following tools before running the script:
+5. Variant Calling — GATK HaplotypeCaller
 
-| Tool              | Version (Recommended) |
-|-------------------|----------------------|
-| [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)   | v0.11+ |
-| [fastp](https://github.com/OpenGene/fastp) | v0.20+ |
-| [BWA](http://bio-bwa.sourceforge.net/)     | v0.7+ |
-| [SAMtools](http://www.htslib.org/)         | v1.10+ |
-| [GATK](https://gatk.broadinstitute.org/)   | v4.0+ |
+Produces a raw VCF file.
+(Filtering, recalibration, and annotation are not included.)
 
----
+6. Annotation (Placeholder)
 
-## 📂 Input Files
+Area for integrating tools like ANNOVAR or VEP.
 
-- `sample_R1.fastq.gz` and `sample_R2.fastq.gz` – Paired-end FASTQ files  
-- `GRCh38.fa` – Reference genome FASTA file (indexed with `bwa index` and `samtools faidx`)
+## 📂 Repository Structure
+WES-pipeline/
+│── wes_pipeline.sh     # The core Bash script
+└── README.md
 
----
+## Requirements
 
-## 🚀 Usage
+🔹 FastQC
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/Khushityagi-web/WES-pipeline.git
-   cd WES-pipeline
+🔹 fastp
+
+🔹 BWA
+
+🔹 SAMtools
+
+🔹 GATK 4+
+
+🔹 GRCh38 reference genome (indexed)
+
+## 🎯 Purpose of This Repository
+
+This repo exists to:
+
+🔹 practice the basic flow of a WES pipeline
+
+🔹 understand how common tools fit together
+
+🔹 build intuition before working on production pipelines
+
+🔹 provide a minimal, readable template for beginners
+
+It does not aim to be a clinical-grade or research-grade workflow.
+
+### 🤝 Author
+
+Khushi Tyagi
